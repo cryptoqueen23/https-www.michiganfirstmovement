@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Michigan First Movement homepage redesign concept prepared by Phoenix Securitas.">
+<title>Michigan First Movement | Patriots First</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:wght@400;700&display=swap');
+
+:root {
+  --midnight:#07182c;
+  --navy:#0d2949;
+  --blue:#164c7d;
+  --red:#b52a32;
+  --gold:#e8b83e;
+  --paper:#f6f2e8;
+  --white:#ffffff;
+  --ink:#17212c;
+  --muted:#657181;
+  --line:rgba(7,24,44,.13);
+  --shadow:0 24px 70px rgba(7,24,44,.15);
+  --max:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"DM Sans",Arial,sans-serif;color:var(--ink);background:var(--white);line-height:1.6}
+body.menu-open{overflow:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+button,input{font:inherit}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;z-index:999;background:#fff;padding:12px}
+
+.proposal-bar{
+  background:var(--gold);color:var(--midnight);text-align:center;padding:10px 18px;
+  font-weight:800;font-size:.78rem;letter-spacing:.055em;text-transform:none;
+}
+
+.site-header{
+  position:sticky;top:0;z-index:50;background:rgba(7,24,44,.96);
+  backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.1)
+}
+.header-inner{
+  max-width:var(--max);margin:auto;padding:0 24px;min-height:82px;
+  display:flex;align-items:center;justify-content:space-between;gap:26px
+}
+.wordmark{display:flex;align-items:center;gap:13px;color:#fff;text-decoration:none}
+.wordmark-mark{
+  width:48px;height:48px;display:grid;place-items:center;border-radius:50%;
+  border:2px solid var(--gold);color:var(--gold);font-weight:900;font-size:1.1rem
+}
+.wordmark strong{display:block;line-height:1.05;font-size:.98rem;letter-spacing:.025em}
+.wordmark small{display:block;margin-top:5px;color:rgba(255,255,255,.62);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase}
+.nav-list{list-style:none;display:flex;align-items:center;gap:23px;margin:0;padding:0}
+.nav-list a{color:rgba(255,255,255,.84);text-decoration:none;font-weight:700;font-size:.86rem}
+.nav-list a:hover{color:var(--gold)}
+.nav-list .join-link{background:var(--gold);color:var(--midnight);padding:11px 17px;border-radius:999px}
+.menu-toggle{display:none;background:transparent;border:0;color:#fff;font-size:1.7rem;cursor:pointer}
+
+.hero{
+  position:relative;overflow:hidden;color:#fff;min-height:710px;
+  background:
+    linear-gradient(90deg,rgba(5,17,32,.99) 0%,rgba(5,17,32,.93) 45%,rgba(5,17,32,.38) 100%),
+    radial-gradient(circle at 82% 30%,rgba(232,184,62,.28),transparent 26%),
+    linear-gradient(135deg,#08192d,#174f7c);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;opacity:.11;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:64px 64px
+}
+.hero::after{
+  content:"";position:absolute;right:-130px;bottom:-210px;width:620px;height:620px;border:120px solid rgba(255,255,255,.035);border-radius:50%
+}
+.hero-inner{
+  position:relative;z-index:2;max-width:var(--max);margin:auto;padding:105px 24px 92px;
+  display:grid;grid-template-columns:1.08fr .92fr;gap:72px;align-items:center
+}
+.eyebrow{display:flex;align-items:center;gap:12px;color:#ffd76c;font-weight:900;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase}
+.eyebrow::before{content:"";width:44px;height:3px;background:var(--gold)}
+h1,h2,h3,p{margin-top:0}
+h1{
+  font-family:"Libre Baskerville",Georgia,serif;font-size:clamp(3.6rem,7.2vw,6.8rem);
+  letter-spacing:-.06em;line-height:.94;margin:24px 0 26px
+}
+h1 .gold{color:var(--gold)}
+.hero-copy{max-width:660px;color:rgba(255,255,255,.79);font-size:1.13rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:13px;margin-top:34px}
+.button{
+  min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;
+  border-radius:999px;text-decoration:none;font-weight:900;border:2px solid transparent;transition:.2s ease
+}
+.button:hover{transform:translateY(-2px)}
+.button-primary{background:var(--gold);color:var(--midnight)}
+.button-outline{border-color:rgba(255,255,255,.45);color:#fff;background:rgba(255,255,255,.04)}
+.hero-proof{display:flex;gap:24px;flex-wrap:wrap;margin-top:40px;color:rgba(255,255,255,.68);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.hero-proof span::before{content:"✓";color:var(--gold);margin-right:8px}
+
+.visual-stack{position:relative;min-height:500px;display:grid;place-items:center}
+.state-card{
+  width:min(100%,470px);padding:27px;border-radius:32px;
+  background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.055));
+  border:1px solid rgba(255,255,255,.18);box-shadow:0 38px 90px rgba(0,0,0,.34);
+  transform:rotate(1.25deg);backdrop-filter:blur(12px)
+}
+.logo-panel{background:#fff;border-radius:22px;padding:20px}
+.logo-panel img{width:100%;aspect-ratio:16/10;object-fit:contain}
+.state-label{
+  position:absolute;right:0;bottom:34px;background:var(--red);color:#fff;padding:14px 18px;
+  border-radius:14px;box-shadow:0 16px 35px rgba(0,0,0,.25);font-weight:900
+}
+.state-label small{display:block;font-weight:600;opacity:.72;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase}
+
+.impact-wrap{max-width:1100px;margin:-42px auto 0;position:relative;z-index:10;padding:0 24px}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.impact-item{padding:26px 20px;text-align:center;border-right:1px solid var(--line)}
+.impact-item:last-child{border-right:0}
+.impact-item b{display:block;color:var(--midnight);font-family:"Libre Baskerville",serif;font-size:1.02rem}
+.impact-item span{display:block;color:var(--muted);font-size:.79rem;margin-top:4px}
+
+.section{padding:105px 24px}
+.container{max-width:var(--max);margin:auto}
+.kicker{color:#9a6800;font-weight:900;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:"Libre Baskerville",Georgia,serif;color:var(--midnight);font-size:clamp(2.35rem,5vw,4.25rem);line-height:1.07;letter-spacing:-.045em;margin-bottom:20px}
+.section-lead{max-width:760px;color:var(--muted);font-size:1.08rem}
+
+.mission-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:75px;align-items:center}
+.michigan-panel{
+  min-height:480px;border-radius:32px;padding:40px;color:#fff;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:linear-gradient(145deg,#164f7f,#06172a);box-shadow:var(--shadow)
+}
+.michigan-panel::before{
+  content:"MI";position:absolute;top:-35px;right:-8px;font-family:"Libre Baskerville",serif;
+  font-size:14rem;font-weight:700;color:rgba(255,255,255,.055);line-height:1
+}
+.michigan-panel::after{content:"";position:absolute;inset:20px;border:1px solid rgba(255,255,255,.13);border-radius:22px}
+.michigan-panel blockquote{position:relative;z-index:2;margin:0;font-family:"Libre Baskerville",serif;font-size:2.05rem;line-height:1.28}
+.michigan-panel cite{position:relative;z-index:2;margin-top:18px;color:#ffd76c;font-style:normal;font-weight:900;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase}
+.mission-list{list-style:none;padding:0;margin:30px 0 0;display:grid;gap:16px}
+.mission-list li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;color:#3f4b59}
+.check{
+  width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(232,184,62,.25);color:#795100;font-weight:900
+}
+
+.priorities{background:var(--paper)}
+.priority-header{display:flex;justify-content:space-between;gap:30px;align-items:end}
+.priority-header .section-lead{max-width:560px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px;min-height:282px;
+  box-shadow:0 12px 35px rgba(7,24,44,.055);position:relative;overflow:hidden;transition:.25s ease
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 45px rgba(7,24,44,.1)}
+.card::after{content:"";position:absolute;right:-30px;bottom:-34px;width:100px;height:100px;border-radius:50%;background:rgba(232,184,62,.12)}
+.card-number{font-weight:900;color:var(--red);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.card-icon{
+  width:52px;height:52px;border-radius:15px;margin:19px 0 22px;display:grid;place-items:center;
+  background:var(--midnight);color:var(--gold);font-size:1.35rem;font-weight:900
+}
+.card h3{color:var(--midnight);font-size:1.18rem;margin-bottom:11px}
+.card p{color:var(--muted);font-size:.93rem;margin-bottom:0}
+
+.action-strip{background:var(--red);color:#fff;padding:30px 24px}
+.action-inner{max-width:var(--max);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.action-inner strong{font-family:"Libre Baskerville",serif;font-size:1.55rem}
+.action-inner a{background:#fff;color:var(--red);padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:900;white-space:nowrap}
+
+.pathways-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:70px;align-items:start}
+.pathways{display:grid;grid-template-columns:repeat(2,1fr);gap:17px}
+.pathway{padding:27px;border-radius:20px;border:1px solid var(--line);background:#fff}
+.pathway span{display:block;color:var(--red);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:900;margin-bottom:12px}
+.pathway h3{color:var(--midnight);margin-bottom:8px}
+.pathway p{color:var(--muted);font-size:.9rem;margin-bottom:0}
+
+.leader{background:var(--midnight);color:#fff}
+.leader-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:70px;align-items:center}
+.leader-portrait{
+  min-height:430px;border-radius:28px;background:
+  radial-gradient(circle at 50% 32%,rgba(232,184,62,.28),transparent 22%),
+  linear-gradient(145deg,#1b527f,#07182c);display:grid;place-items:center;box-shadow:0 25px 70px rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.12)
+}
+.leader-monogram{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;border:3px solid var(--gold);color:var(--gold);font-family:"Libre Baskerville",serif;font-size:3.2rem}
+.leader .section-title{color:#fff}
+.leader .section-lead{color:rgba(255,255,255,.68)}
+.leader-name{color:var(--gold);font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:.76rem}
+
+.join{background:linear-gradient(145deg,#f8f4ea,#fff)}
+.join-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:65px;align-items:center}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:25px;padding:30px;box-shadow:var(--shadow)}
+.form-card label{font-size:.78rem;font-weight:800;color:#45505e}
+.form-card input{width:100%;padding:14px 15px;border:1px solid #ccd2da;border-radius:11px;margin:7px 0 14px}
+.form-card button{width:100%;border:0;border-radius:11px;background:var(--gold);color:var(--midnight);padding:15px;font-weight:900;cursor:pointer}
+.disclaimer{color:var(--muted);font-size:.72rem;margin-top:12px}
+
+footer{background:#030e1b;color:rgba(255,255,255,.66);padding:55px 24px}
+.footer-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.2fr .8fr;gap:40px}
+footer strong{color:#fff}
+.footer-note{font-size:.76rem;max-width:650px}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:18px;font-size:.8rem}
+.footer-links a{text-decoration:none}
+.copyright{max-width:var(--max);margin:30px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:.73rem}
+
+@media(max-width:930px){
+  .menu-toggle{display:block}
+  .nav-list{
+    display:none;position:fixed;inset:calc(82px + 38px) 0 0 0;background:var(--midnight);
+    padding:35px 24px;flex-direction:column;align-items:flex-start
+  }
+  .nav-list.open{display:flex}
+  .hero-inner,.mission-grid,.pathways-grid,.leader-grid,.join-grid{grid-template-columns:1fr}
+  .visual-stack{min-height:430px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .impact-grid{grid-template-columns:repeat(2,1fr)}
+  .impact-item:nth-child(2){border-right:0}
+  .priority-header{display:block}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-links{justify-content:flex-start}
+}
+@media(max-width:640px){
+  .proposal-bar{font-size:.68rem}
+  .header-inner{min-height:72px;padding:0 18px}
+  .wordmark small{display:none}
+  h1{font-size:3.25rem}
+  .hero-inner{padding-top:78px}
+  .hero-proof{display:grid;gap:10px}
+  .impact-grid,.cards,.pathways{grid-template-columns:1fr}
+  .impact-item{border-right:0;border-bottom:1px solid var(--line)}
+  .impact-item:last-child{border-bottom:0}
+  .section{padding:78px 20px}
+  .action-inner{display:block}
+  .action-inner a{display:inline-flex;margin-top:15px}
+  .state-label{right:10px}
+  .michigan-panel blockquote{font-size:1.65rem}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="proposal-bar">Homepage mockup — proposed fix for rnha.org · prepared by Phoenix Securitas</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="wordmark" href="#top" aria-label="Michigan First Movement home">
+      <span class="wordmark-mark">★</span>
+      <span><strong>Michigan First Movement</strong><small>Patriots First</small></span>
+    </a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#priorities">Policy Priorities</a></li>
+        <li><a href="#action">Get Involved</a></li>
+        <li><a href="#leadership">Leadership</a></li>
+        <li><a href="#join" class="join-link">Become a Patriot</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Patriot-led. Michigan-focused.</div>
+      <h1>The power belongs to <span class="gold">We the People.</span></h1>
+      <p class="hero-copy">Michigan First is a grassroots movement working to restore sovereignty, prosperity, safety, and American values across our state. We put Michigan families, American citizens, and constitutional principles first.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#join">Join Michigan First</a>
+        <a class="button button-outline" href="#priorities">Read Our Priorities</a>
+      </div>
+      <div class="hero-proof">
+        <span>Faith</span><span>Family</span><span>Freedom</span><span>Michigan First</span>
+      </div>
+    </div>
+    <div class="visual-stack" aria-label="Michigan First Movement branding">
+      <div class="state-card">
+        <div class="logo-panel"><img src="https://lh3.googleusercontent.com/sitesv/AG8ngQVwq9evGHeN8dlzp71MtQSkxk2-07oZ1tV7zN1vpwbHG6sXIFb6z5OgFoGMtCi188tnnzsor1khd-cLZ_T1re6lTTpoIBXigL5d0iEmZpp66qweiAq2Rc4IjXwut9jPPQ0PEB8_L4PwqVQ39Jvg61UcTs9lnUGba0ELkjyxe6ht_elCvnrw9BDeTSDd2f_LV2Z6HqvyxgL0UqozrqPhHLqMM5f976FSU1HMuftkoFg=w1280" alt="Michigan First Movement logo"></div>
+      </div>
+      <div class="state-label"><small>Grassroots movement</small>Patriots United</div>
+    </div>
+  </div>
+</section>
+
+<div class="impact-wrap">
+  <div class="impact-grid">
+    <div class="impact-item"><b>Michigan Sovereignty</b><span>State and citizen power first</span></div>
+    <div class="impact-item"><b>Economic Strength</b><span>Farms, energy, and manufacturing</span></div>
+    <div class="impact-item"><b>Safe Communities</b><span>Law, order, and accountability</span></div>
+    <div class="impact-item"><b>Citizen Leadership</b><span>One community at a time</span></div>
+  </div>
+</div>
+
+<section class="section" id="mission">
+  <div class="container">
+    <div class="kicker">Our Mission</div>
+    <h2 class="section-title">Take back our great state.<br>Power belongs to We the People.</h2>
+    <p class="section-lead">
+      The Michigan First Movement is a grassroots patriot organization built on the unshakeable conviction that strong, high-functioning local communities form the foundation of a strong state and nation.
+    </p>
+
+    <div class="mission-grid" style="margin-top:52px;">
+      <div class="michigan-panel">
+        <blockquote>“Because the power belongs to We the People.”</blockquote>
+        <cite>Michigan First Movement</cite>
+      </div>
+
+      <div>
+        <h3 style="font-family:'Libre Baskerville',Georgia,serif;color:var(--midnight);font-size:2rem;line-height:1.2;margin-bottom:18px;">
+          Faith. Family. Integrity. Hard work.
+        </h3>
+
+        <p class="section-lead">
+          We believe that self-sufficient communities governed by constitutional principles, traditional American Christian values, and the principles of faith, family, integrity, and hard work are the only way to secure a prosperous future for Michigan and America.
+        </p>
+
+        <ul class="mission-list">
+          <li><span class="check">✓</span><span><strong>Strong local communities.</strong> Government should remain close to the people it serves.</span></li>
+          <li><span class="check">✓</span><span><strong>Constitutional principles.</strong> Liberty, accountability, and state sovereignty must be protected.</span></li>
+          <li><span class="check">✓</span><span><strong>Traditional values.</strong> Faith, family, personal responsibility, and hard work strengthen Michigan.</span></li>
+          <li><span class="check">✓</span><span><strong>Citizen power.</strong> The people, not unelected authorities, must shape Michigan’s future.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:64px;">
+      <article class="card">
+        <div class="card-number">Mission 01</div>
+        <div class="card-icon">🏛</div>
+        <h3>Decentralize Power</h3>
+        <p>
+          We reject the growing expansion of federal tyranny that threatens state sovereignty and burdens Michigan families with an out-of-touch, unaccountable, and oppressive central government.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-number">Mission 02</div>
+        <div class="card-icon">⚖</div>
+        <h3>Uproot Corruption</h3>
+        <p>
+          Our mission is to transform government into a lean, highly effective agency that puts the people of Michigan first before globalist special interests, foreign powers, and unelected bureaucrats.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-number">Mission 03</div>
+        <div class="card-icon">★</div>
+        <h3>Protect Faith and Freedom</h3>
+        <p>
+          We advocate for solutions that protect faith in our founding principles and traditional values while freeing local communities to make their own decisions.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-number">Mission 04</div>
+        <div class="card-icon">🗳</div>
+        <h3>Empower Citizens</h3>
+        <p>
+          From taxes and debt to energy, infrastructure, election security, ballot access, and government waste, every cause advances citizen empowerment and freedom preservation.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-number">Mission 05</div>
+        <div class="card-icon">🤝</div>
+        <h3>Mobilize Patriots</h3>
+        <p>
+          Through grassroots activism, education, community organizing, town halls, citizen initiatives, ballot referendums, and local solutions, we are uniting the patriots of Michigan.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-number">Mission 06</div>
+        <div class="card-icon">⚙</div>
+        <h3>Reclaim Michigan</h3>
+        <p>
+          Farmers, factory workers, small business owners, parents, veterans, and believers share a sacred duty to reclaim our state for We the People.
+        </p>
+      </article>
+    </div>
+
+    <div class="action-strip" style="margin-top:64px;border-radius:22px;overflow:hidden;">
+      <div class="action-inner">
+        <strong>Michigan First. Faith First. Freedom First. Patriots First.</strong>
+        <a href="#join">Join the Fight</a>
+      </div>
+    </div>
+
+    <div style="max-width:900px;margin:58px auto 0;text-align:center;">
+      <div class="kicker">Our Commitment</div>
+      <h3 style="font-family:'Libre Baskerville',Georgia,serif;color:var(--midnight);font-size:clamp(2rem,4vw,3.25rem);line-height:1.15;margin-bottom:22px;">
+        The future of Michigan belongs to We the People.
+      </h3>
+      <p class="section-lead" style="margin-left:auto;margin-right:auto;">
+        Michigan First is a movement of faithful, freedom-loving patriots. We believe that when local communities are free to thrive in liberty and virtue, Michigan will thrive, and when Michigan stands sovereign and strong, America is at her strongest.
+      </p>
+      <p style="color:var(--muted);font-size:1rem;margin-top:22px;">
+        Not Washington, D.C. Not globalists. Not the corrupt establishment.
+      </p>
+      <div class="hero-actions" style="justify-content:center;margin-top:28px;">
+        <a class="button button-primary" href="#join">Join the Movement</a>
+        <a class="button" href="#priorities" style="border-color:var(--midnight);color:var(--midnight);background:transparent;">Read Our Priorities</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section priorities" id="priorities">
+  <div class="container">
+    <div class="priority-header">
+      <div>
+        <div class="kicker">Policy Priorities</div>
+        <h2 class="section-title">A Michigan renaissance.</h2>
+      </div>
+      <p class="section-lead">The movement’s platform reaches beyond slogans. It connects sovereignty with food, energy, industry, education, public safety, and generational prosperity.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><div class="card-number">Priority 01</div><div class="card-icon">⚖</div><h3>Law, Order & Security</h3><p>Support law enforcement, strengthen public safety, enforce immigration law, and protect Michigan communities.</p></article>
+      <article class="card"><div class="card-number">Priority 02</div><div class="card-icon">⚡</div><h3>Energy & Tax Freedom</h3><p>Advance an all-of-the-above energy strategy while pursuing lower taxes, efficiency, and economic independence.</p></article>
+      <article class="card"><div class="card-number">Priority 03</div><div class="card-icon">🌾</div><h3>Farm & Food Sovereignty</h3><p>Protect generational farms, reduce unnecessary burdens, and expand Michigan agricultural production.</p></article>
+      <article class="card"><div class="card-number">Priority 04</div><div class="card-icon">⚙</div><h3>Manufacturing Leadership</h3><p>Rebuild auto, shipbuilding, and heavy industry while leading in advanced manufacturing and technology.</p></article>
+      <article class="card"><div class="card-number">Priority 05</div><div class="card-icon">★</div><h3>Education & Parental Rights</h3><p>Empower parents, strengthen civics and Michigan history, and expand educational opportunity.</p></article>
+      <article class="card"><div class="card-number">Priority 06</div><div class="card-icon">🏛</div><h3>Accountable Government</h3><p>Confront waste and corruption, demand transparency, and return decision-making to the people.</p></article>
+    </div>
+  </div>
+</section>
+
+<div class="action-strip">
+  <div class="action-inner">
+    <strong>Michigan First. Faith First. Family First. Freedom First.</strong>
+    <a href="#join">Answer the Call</a>
+  </div>
+</div>
+
+<section class="section" id="action">
+  <div class="container pathways-grid">
+    <div>
+      <div class="kicker">Get Involved</div>
+      <h2 class="section-title">Turn conviction into action.</h2>
+      <p class="section-lead">The website should make it easy for visitors to move from agreement to participation without digging through pages of text.</p>
+    </div>
+    <div class="pathways">
+      <article class="pathway"><span>01</span><h3>Become a Member</h3><p>Receive movement updates, event invitations, and organizing resources.</p></article>
+      <article class="pathway"><span>02</span><h3>Volunteer Locally</h3><p>Canvas, organize meetups, support voter outreach, and help build local chapters.</p></article>
+      <article class="pathway"><span>03</span><h3>Attend Events</h3><p>Join town halls, strategy sessions, training events, and patriot gatherings.</p></article>
+      <article class="pathway"><span>04</span><h3>Lead or Run</h3><p>Prepare citizens to serve on school boards, commissions, and in public office.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section leader" id="leadership">
+  <div class="container leader-grid">
+    <div class="leader-portrait" aria-label="Founder portrait placeholder">
+      <div class="leader-monogram">GB</div>
+    </div>
+    <div>
+      <div class="leader-name">Founder · Gregor Butzow</div>
+      <h2 class="section-title">Leadership rooted in service.</h2>
+      <p class="section-lead">This section gives the founder a credible introduction and creates room for a professional portrait, biography, leadership philosophy, and direct message to Michigan citizens.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#">Meet the Leadership</a>
+        <a class="button button-outline" href="#join">Get Involved</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section join" id="join">
+  <div class="container join-grid">
+    <div>
+      <div class="kicker">Patriots United</div>
+      <h2 class="section-title">One community. One county. One patriot at a time.</h2>
+      <p class="section-lead">Join Michigan citizens who are ready to strengthen their communities, protect constitutional principles, and help shape the future of the state.</p>
+    </div>
+    <form class="form-card" onsubmit="event.preventDefault(); alert('Mockup form only.');">
+      <label for="name">Full name</label>
+      <input id="name" name="name" autocomplete="name" placeholder="Your name">
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+      <label for="zip">Michigan ZIP code</label>
+      <input id="zip" name="zip" inputmode="numeric" placeholder="ZIP code">
+      <button type="submit">Become a Michigan First Patriot</button>
+      <p class="disclaimer">Demonstration form for homepage concept only.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <strong>Michigan First Movement</strong>
+      <p class="footer-note">Patriot-led grassroots action for sovereignty, prosperity, safety, and American values in Michigan.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#mission">Mission</a>
+      <a href="#priorities">Priorities</a>
+      <a href="#action">Get Involved</a>
+      <a href="#leadership">Leadership</a>
+    </div>
+  </div>
+  <div class="copyright">Homepage mockup prepared by Phoenix Securitas. This concept is not the organization’s current official website.</div>
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const menu = document.querySelector('.nav-list');
+toggle.addEventListener('click', () => {
+  const open = menu.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+  toggle.textContent = open ? '×' : '☰';
+  document.body.classList.toggle('menu-open', open);
+});
+document.querySelectorAll('.nav-list a').forEach(link => link.addEventListener('click', () => {
+  menu.classList.remove('open');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.textContent = '☰';
+  document.body.classList.remove('menu-open');
+}));
+</script>
+</body>
+</html>
