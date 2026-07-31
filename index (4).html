@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Michigan First Movement. A grassroots movement putting Michigan families, communities, freedom and prosperity first.">
+<title>Michigan First Movement | Patriots First</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#070707;
+  --soft-black:#171717;
+  --yellow:#ffd21f;
+  --yellow-2:#f5b800;
+  --white:#fff;
+  --off:#fff8cf;
+  --ink:#151515;
+  --muted:#666;
+  --line:rgba(0,0,0,.12);
+  --max:1440px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--white);color:var(--ink);line-height:1.55;overflow-x:hidden}
+body.menu-open{overflow:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+button,input,select{font:inherit}
+::selection{background:var(--yellow);color:#000}
+.skip-link{position:absolute;left:-9999px;top:auto}
+.skip-link:focus{left:18px;top:18px;z-index:1000;background:#fff;color:#000;padding:12px 16px;border-radius:8px}
+
+.mockup-bar{
+  position:relative;z-index:120;background:var(--yellow);color:#000;text-align:center;
+  padding:9px 18px;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase
+}
+
+.site-header{
+  position:fixed;z-index:100;top:33px;left:0;right:0;color:#fff;
+  transition:background .35s ease,box-shadow .35s ease,top .35s ease,backdrop-filter .35s ease
+}
+.site-header.scrolled{
+  top:0;background:rgba(255,255,255,.95);color:#111;backdrop-filter:blur(18px);
+  box-shadow:0 10px 40px rgba(0,0,0,.10)
+}
+.site-header.scrolled .brand{color:#111}
+.site-header.scrolled .brand-copy small{color:#666}
+.site-header.scrolled .brand-mark{color:#000;border-color:var(--yellow);background:var(--yellow)}
+.site-header.scrolled .desktop-nav a{color:#222}
+.site-header.scrolled .menu-toggle{color:#111;border-color:#bbb}
+.site-header.scrolled .nav-cta{color:#000!important}
+.header-inner{
+  max-width:var(--max);margin:auto;min-height:92px;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:22px
+}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
+.brand-mark{
+  width:48px;height:48px;border:2px solid var(--yellow);border-radius:50%;
+  display:grid;place-items:center;color:var(--yellow);font-family:"Barlow Condensed",sans-serif;
+  font-size:1.25rem;font-weight:900;box-shadow:0 0 0 6px rgba(255,210,31,.08)
+}
+.brand-copy strong{
+  display:block;font-family:"Barlow Condensed",sans-serif;font-size:1.16rem;
+  line-height:1;letter-spacing:.035em;text-transform:uppercase
+}
+.brand-copy small{display:block;margin-top:4px;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.67)}
+.desktop-nav{display:flex;align-items:center;justify-content:flex-end;gap:18px;min-width:0}
+.desktop-nav a{
+  text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.025em;
+  color:rgba(255,255,255,.88);white-space:nowrap;position:relative;padding:34px 0
+}
+.desktop-nav a:not(.nav-cta)::after{
+  content:"";position:absolute;left:0;right:100%;bottom:25px;height:2px;background:var(--yellow);
+  transition:right .25s ease
+}
+.desktop-nav a:not(.nav-cta):hover::after,.desktop-nav a:focus-visible::after{right:0}
+.desktop-nav a:hover{color:#fff}
+.nav-cta{
+  background:var(--yellow);color:#000!important;padding:12px 16px!important;border-radius:999px;
+  transition:transform .2s ease,box-shadow .2s ease
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,210,31,.25)}
+.menu-toggle{
+  display:none;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);
+  border-radius:50%;width:48px;height:48px;font-size:1.35rem;cursor:pointer
+}
+
+.mobile-menu{
+  position:fixed;z-index:95;inset:0;background:#050505;color:#fff;padding:120px 28px 36px;
+  transform:translateY(-110%);transition:transform .42s cubic-bezier(.22,1,.36,1);
+  overflow:auto
+}
+.mobile-menu.open{transform:none}
+.mobile-menu nav{display:grid}
+.mobile-menu a{
+  font-family:"Barlow Condensed",sans-serif;font-size:clamp(2rem,9vw,4rem);font-weight:800;
+  line-height:1.08;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.13);padding:11px 0
+}
+.mobile-menu a:hover{color:var(--yellow)}
+
+.hero{
+  position:relative;min-height:100svh;color:#fff;display:grid;align-items:end;overflow:hidden;background:#080808
+}
+.hero-media{position:absolute;inset:0;background:#111}
+.hero-slide{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+  opacity:0;transform:scale(1.06);transition:opacity 1.8s ease,transform 11.5s ease;
+  will-change:opacity,transform
+}
+.hero-slide.active{opacity:1;transform:scale(1)}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.38) 0%,rgba(0,0,0,.10) 30%,rgba(0,0,0,.16) 56%,rgba(0,0,0,.70) 100%),
+    linear-gradient(90deg,rgba(0,0,0,.44),rgba(0,0,0,.04) 62%)
+}
+.hero-grain{
+  position:absolute;inset:0;opacity:.13;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E")
+}
+.hero-inner{
+  position:relative;z-index:5;width:100%;max-width:var(--max);margin:auto;padding:190px 32px 74px;
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:80px;align-items:end
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:14px;font-size:.72rem;font-weight:800;
+  letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:20px
+}
+.hero-kicker::before{content:"";width:52px;height:3px;background:var(--yellow)}
+.hero h1{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
+  font-size:clamp(5.2rem,11.8vw,11.6rem);line-height:.75;letter-spacing:-.035em;margin:0;
+  max-width:960px;text-wrap:balance;text-shadow:0 10px 45px rgba(0,0,0,.28)
+}
+.hero h1 span{display:block;color:var(--yellow)}
+.hero-side{padding-bottom:10px}
+.hero-side p{font-size:1.02rem;color:rgba(255,255,255,.82);max-width:470px;margin:0 0 28px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  min-height:52px;padding:13px 21px;border-radius:999px;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;
+  border:1px solid transparent;transition:transform .2s ease,background .2s ease,color .2s ease,border-color .2s ease
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-yellow{background:var(--yellow);color:#000}
+.btn-ghost{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.55);color:#fff;backdrop-filter:blur(8px)}
+.btn-dark{background:#000;color:#fff}
+.btn-outline-dark{border-color:#111;color:#111;background:transparent}
+.scroll-hint{
+  position:absolute;z-index:6;right:32px;bottom:32px;display:flex;align-items:center;gap:12px;
+  font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.58)
+}
+.scroll-line{height:54px;width:1px;background:linear-gradient(var(--yellow),transparent)}
+
+.bee{
+  position:absolute;z-index:4;width:34px;height:26px;filter:drop-shadow(0 5px 4px rgba(0,0,0,.18));
+  opacity:.92;pointer-events:none
+}
+.bee svg{width:100%;height:100%;overflow:visible}
+.bee .wing{transform-origin:center;animation:wing .13s ease-in-out infinite alternate}
+@keyframes wing{to{transform:scaleY(.35) rotate(8deg)}}
+.bee-1{left:-5%;top:33%;animation:flyOne 17s linear infinite}
+.bee-2{left:-10%;top:58%;width:23px;opacity:.68;animation:flyTwo 23s linear 3s infinite}
+.bee-3{left:15%;top:20%;width:18px;opacity:.5;animation:flyThree 27s linear 8s infinite}
+@keyframes flyOne{
+  0%{transform:translate(-10vw,0) rotate(-5deg)}
+  28%{transform:translate(35vw,-10vh) rotate(7deg)}
+  56%{transform:translate(68vw,5vh) rotate(-4deg)}
+  100%{transform:translate(115vw,-8vh) rotate(8deg)}
+}
+@keyframes flyTwo{
+  0%{transform:translate(-8vw,0) rotate(2deg)}
+  45%{transform:translate(55vw,7vh) rotate(-8deg)}
+  100%{transform:translate(118vw,-15vh) rotate(4deg)}
+}
+@keyframes flyThree{
+  0%{transform:translate(-20vw,0)}
+  50%{transform:translate(52vw,12vh)}
+  100%{transform:translate(100vw,-4vh)}
+}
+
+.movement-bar{
+  background:var(--yellow);color:#000;overflow:hidden;border-top:1px solid rgba(0,0,0,.15);
+  border-bottom:1px solid rgba(0,0,0,.15)
+}
+.marquee{display:flex;width:max-content;animation:marquee 30s linear infinite}
+.marquee span{
+  font-family:"Barlow Condensed",sans-serif;font-size:1.22rem;font-weight:900;text-transform:uppercase;
+  letter-spacing:.055em;padding:15px 24px;white-space:nowrap
+}
+.marquee span::after{content:"✦";margin-left:48px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+.section{padding:120px 32px}
+.container{max-width:var(--max);margin:auto}
+.section-dark{background:#080808;color:#fff}
+.section-off{background:var(--off)}
+.eyebrow{
+  display:flex;align-items:center;gap:12px;font-size:.68rem;font-weight:900;
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:15px
+}
+.eyebrow::before{content:"";width:34px;height:3px;background:var(--yellow)}
+.display{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-weight:900;
+  font-size:clamp(3.5rem,7vw,7.5rem);line-height:.88;letter-spacing:-.02em;margin:0;
+}
+.display .yellow{color:var(--yellow)}
+.lead{font-size:1.08rem;color:#666;max-width:720px}
+.section-dark .lead{color:rgba(255,255,255,.67)}
+
+.mission-layout{
+  display:grid;grid-template-columns:.82fr 1.18fr;gap:90px;align-items:start
+}
+.mission-sticky{position:sticky;top:130px}
+.quote-panel{
+  margin-top:42px;padding:28px;border-left:4px solid var(--yellow);background:#101010
+}
+.quote-panel p{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.65rem,3vw,2.55rem);line-height:1.05;margin:0
+}
+.mission-stack{display:grid;gap:1px;background:rgba(255,255,255,.12)}
+.mission-row{
+  background:#080808;display:grid;grid-template-columns:90px 1fr;gap:25px;padding:36px 28px;
+  transition:background .25s ease,transform .25s ease
+}
+.mission-row:hover{background:#111;transform:translateX(6px)}
+.mission-number{
+  font-family:"Barlow Condensed",sans-serif;font-size:3.6rem;font-weight:900;line-height:.8;
+  color:var(--yellow)
+}
+.mission-row h3{
+  margin:0 0 7px;font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
+  font-size:1.7rem;line-height:1;font-weight:800
+}
+.mission-row p{margin:0;color:rgba(255,255,255,.65);font-size:.94rem}
+
+.michigan-showcase{padding:0;background:#050505;color:#fff}
+.showcase-grid{display:grid;grid-template-columns:1.05fr .95fr;min-height:720px}
+.showcase-photo{position:relative;overflow:hidden}
+.showcase-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.22,1,.36,1)}
+.showcase-photo:hover img{transform:scale(1.035)}
+.showcase-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,#050505)}
+.showcase-copy{padding:90px 7vw 90px 70px;display:flex;flex-direction:column;justify-content:center}
+.showcase-copy .display{font-size:clamp(3.8rem,6.8vw,7rem)}
+.showcase-copy p{color:rgba(255,255,255,.66);max-width:570px;font-size:1.04rem}
+
+.policy-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#1d1d1d;margin-top:58px;border:1px solid #1d1d1d
+}
+.policy-card{
+  min-height:350px;background:#0b0b0b;color:#fff;padding:33px;position:relative;overflow:hidden;
+  text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;
+  transition:background .25s ease,transform .25s ease
+}
+.policy-card:hover{background:#151515}
+.policy-card::before{
+  content:"";position:absolute;inset:auto 0 0;height:5px;background:var(--yellow);
+  transform:scaleX(0);transform-origin:left;transition:transform .35s ease
+}
+.policy-card:hover::before{transform:scaleX(1)}
+.policy-card .num{font-size:.7rem;font-weight:800;letter-spacing:.18em;color:var(--yellow)}
+.policy-card h3{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-size:2rem;line-height:.96;margin:0 0 10px
+}
+.policy-card p{color:rgba(255,255,255,.62);font-size:.9rem;margin:0}
+.policy-card .arrow{font-size:1.7rem;transition:transform .2s ease}
+.policy-card:hover .arrow{transform:translate(7px,-7px)}
+
+.cta-banner{
+  background:var(--yellow);color:#000;padding:70px 32px;position:relative;overflow:hidden
+}
+.cta-banner::after{
+  content:"MI";position:absolute;right:2vw;top:-65px;font-family:"Barlow Condensed",sans-serif;
+  font-size:16rem;font-weight:900;color:rgba(0,0,0,.08);line-height:1
+}
+.cta-inner{max-width:var(--max);margin:auto;position:relative;z-index:2;display:flex;align-items:end;justify-content:space-between;gap:50px}
+.cta-inner h2{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-size:clamp(3rem,6vw,6.5rem);
+  line-height:.85;margin:0;max-width:850px
+}
+
+.involvement-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:start}
+.action-list{display:grid;gap:14px}
+.action-card{
+  display:grid;grid-template-columns:64px 1fr 30px;align-items:center;gap:18px;
+  border:1px solid var(--line);padding:22px 24px;text-decoration:none;background:#fff;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease
+}
+.action-card:hover{transform:translateX(6px);border-color:#111;box-shadow:0 18px 40px rgba(0,0,0,.07)}
+.action-icon{
+  width:54px;height:54px;border-radius:50%;background:#000;color:var(--yellow);display:grid;place-items:center;
+  font-family:"Barlow Condensed",sans-serif;font-size:1.4rem;font-weight:900
+}
+.action-card h3{margin:0;font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-size:1.55rem}
+.action-card p{margin:3px 0 0;color:#777;font-size:.87rem}
+
+.join-section{position:relative;background:#0a0a0a;color:#fff;overflow:hidden}
+.join-section::before{
+  content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 20% 20%,rgba(255,210,31,.12),transparent 25%),
+  linear-gradient(135deg,transparent 60%,rgba(255,255,255,.025))
+}
+.join-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr .92fr;gap:90px;align-items:center}
+.join-form{
+  background:#fff;color:#111;padding:34px;box-shadow:0 40px 100px rgba(0,0,0,.28)
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.form-field{display:grid;gap:7px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+.form-field input,.form-field select{
+  width:100%;border:1px solid #cfcfcf;background:#fff;padding:14px 13px;min-height:50px;border-radius:0
+}
+.form-field input:focus,.form-field select:focus{outline:3px solid rgba(255,210,31,.45);border-color:#000}
+.form-submit{
+  grid-column:1/-1;background:#000;color:#fff;border:0;min-height:54px;padding:14px;font-weight:900;
+  cursor:pointer;text-transform:uppercase;letter-spacing:.06em
+}
+.form-submit:hover{background:#1c1c1c}
+.form-note{grid-column:1/-1;color:#666;font-size:.69rem;margin:0}
+
+.site-footer{background:#020202;color:#fff;padding:65px 32px 28px}
+.footer-top{
+  max-width:var(--max);margin:auto;display:grid;grid-template-columns:1fr 1.5fr;gap:70px;padding-bottom:50px;
+  border-bottom:1px solid rgba(255,255,255,.14)
+}
+.footer-brand h2{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;color:var(--yellow);
+  font-size:2.2rem;margin:0 0 10px
+}
+.footer-brand p{color:rgba(255,255,255,.58);max-width:430px}
+.footer-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 24px}
+.footer-links a{text-decoration:none;color:rgba(255,255,255,.75);font-size:.83rem}
+.footer-links a:hover{color:var(--yellow)}
+.footer-bottom{
+  max-width:var(--max);margin:26px auto 0;display:flex;justify-content:space-between;gap:30px;align-items:end
+}
+.footer-bottom p{margin:0;color:rgba(255,255,255,.45);font-size:.74rem}
+.people-line{
+  font-family:"Barlow Condensed",sans-serif;font-size:clamp(1.7rem,3vw,3rem)!important;font-weight:900;
+  text-transform:uppercase;color:#fff!important;text-align:right;line-height:.95
+}
+.people-line span{color:var(--yellow)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:1180px){
+  .desktop-nav{display:none}
+  .menu-toggle{display:block}
+  .hero-inner{grid-template-columns:1fr;gap:28px}
+  .hero-side{max-width:640px}
+}
+@media(max-width:900px){
+  .section{padding:90px 24px}
+  .mission-layout,.showcase-grid,.involvement-grid,.join-grid{grid-template-columns:1fr}
+  .mission-sticky{position:static}
+  .showcase-photo{min-height:520px}
+  .showcase-photo::after{background:linear-gradient(180deg,transparent 60%,#050505)}
+  .showcase-copy{padding:70px 24px 90px}
+  .policy-grid{grid-template-columns:1fr 1fr}
+  .cta-inner{display:block}
+  .cta-inner .btn{margin-top:28px}
+  .footer-top{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .mockup-bar{font-size:.6rem}
+  .site-header{top:31px}
+  .header-inner{min-height:76px;padding:0 18px}
+  .brand-copy small{display:none}
+  .brand-mark{width:42px;height:42px}
+  .hero-inner{padding:160px 20px 60px}
+  .hero h1{font-size:clamp(4.45rem,25vw,7.3rem);line-height:.76}
+  .hero-actions .btn{width:100%}
+  .scroll-hint{display:none}
+  .bee-1{width:28px}
+  .section{padding:75px 20px}
+  .mission-row{grid-template-columns:55px 1fr;padding:28px 20px}
+  .mission-number{font-size:2.6rem}
+  .policy-grid{grid-template-columns:1fr}
+  .policy-card{min-height:290px}
+  .cta-banner{padding:58px 20px}
+  .showcase-photo{min-height:420px}
+  .form-grid{grid-template-columns:1fr}
+  .form-field.full,.form-submit,.form-note{grid-column:auto}
+  .join-form{padding:24px 20px}
+  .footer-links{grid-template-columns:1fr 1fr}
+  .footer-bottom{display:block}
+  .people-line{text-align:left;margin-top:28px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+  .bee{display:none}
+  .reveal{opacity:1;transform:none}
+}
+
+/* V2: brighter yellow + white visual system */
+.section-dark{background:#fff;color:#111}
+.section-dark .lead{color:#5f5f5f}
+.section-dark .display{color:#111}
+.section-dark .eyebrow{color:#111}
+.section-dark .quote-panel{
+  background:var(--yellow);color:#000;border-left:0;
+  box-shadow:0 22px 60px rgba(245,184,0,.18)
+}
+.mission-stack{background:#dedede}
+.mission-row{background:#fff;color:#111;border-bottom:1px solid #e8e8e8}
+.mission-row:hover{background:#fff9d8}
+.mission-row p{color:#676767}
+.policy-grid{background:#e5e5e5;border-color:#e5e5e5}
+.policy-card{
+  background:#fff;color:#111;border:0;
+  box-shadow:0 10px 32px rgba(0,0,0,.045)
+}
+.policy-card:hover{background:#fff8cd}
+.policy-card p{color:#666}
+.policy-card .num{color:#8d6900}
+.policy-card::before{height:7px}
+.join-section{background:#fff7c9;color:#111}
+.join-section::before{
+  background:
+    radial-gradient(circle at 15% 10%,rgba(255,210,31,.45),transparent 28%),
+    linear-gradient(135deg,transparent 55%,rgba(0,0,0,.025))
+}
+.join-section .lead{color:#606060}
+.michigan-showcase{background:#fff;color:#111}
+.showcase-grid{background:#fff}
+.showcase-photo::after{background:linear-gradient(90deg,transparent 62%,#fff)}
+.showcase-copy p{color:#676767}
+.showcase-copy .btn-ghost{color:#111;border-color:#111;background:transparent}
+.action-icon{background:var(--yellow);color:#000}
+.action-card{border-color:#e2e2e2}
+.action-card:hover{border-color:#f0c400}
+.site-footer{background:#111}
+
+
+.hero-dots{
+  position:absolute;z-index:7;left:32px;bottom:30px;display:flex;gap:8px;align-items:center
+}
+.hero-dots button{
+  width:24px;height:4px;border:0;padding:0;background:rgba(255,255,255,.45);
+  cursor:pointer;transition:width .25s ease,background .25s ease
+}
+.hero-dots button.active{width:46px;background:var(--yellow)}
+@media(max-width:640px){.hero-dots{left:20px;bottom:22px}}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="mockup-bar">Mockup Site by Phoenix Securitas Tech</div>
+
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a class="brand" href="#home" aria-label="Michigan First Movement home">
+      <span class="brand-mark">MI</span>
+      <span class="brand-copy">
+        <strong>Michigan First Movement</strong>
+        <small>Patriots First</small>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#mission">Mission</a>
+      <a href="#media">Media</a>
+      <a href="#priorities">Policy Priorities</a>
+      <a href="#legislation">Legislation</a>
+      <a href="#programs">Programs</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#values">Values</a>
+      <a href="#get-involved">Get Involved</a>
+      <a href="#shop">Shop</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">☰</button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav aria-label="Mobile navigation">
+    <a href="#home">Home</a>
+    <a href="#mission">Mission</a>
+    <a href="#media">Media</a>
+    <a href="#priorities">Policy Priorities</a>
+    <a href="#legislation">Legislation</a>
+    <a href="#programs">Programs</a>
+    <a href="#leadership">Leadership</a>
+    <a href="#values">Values</a>
+    <a href="#get-involved">Get Involved</a>
+    <a href="#shop">Shop</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<main id="main">
+<section class="hero" id="home" aria-label="Michigan First Movement">
+  <div class="hero-media" id="heroSlideshow" aria-label="Scenic views of Michigan">
+    <img class="hero-slide active" src="https://www.gogreat.com/imager/s3_us-east-1_amazonaws_com/go-great/images/Images/00-SORT/Dan-Gaken/53281216917_6693100670_o_de6e87fb6cf51aac24f471a488a0d1c5.jpg" alt="Vibrant fall colors over Michigan lakes and forests">
+    <img class="hero-slide" src="https://www.michigan.org/sites/default/files/legacy_images/15SMT061_Fall_LakeoftheClouds_0.jpg" alt="Lake of the Clouds in stunning autumn glory">
+    <img class="hero-slide" src="https://www.dangerous-business.com/wp-content/uploads/2021/09/DJI_0147.jpg" alt="Aerial view of Sleeping Bear Dunes in fall">
+    <img class="hero-slide" src="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/westmichigan/Autumn_Fall_Aerial_768cde04-065f-406a-b76b-66a6b0be209b.jpg" alt="West Michigan aerial fall landscape">
+    <img class="hero-slide" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/52/4b/f1/this-picture-was-taken.jpg?w=1600&h=900&s=1" alt="Majestic Tahquamenon Falls in the Upper Peninsula">
+    <img class="hero-slide" src="https://www.awesomemitten.com/wp-content/uploads/2022/02/Tahquamenon-Falls-State-Park.png" alt="Tahquamenon Falls surrounded by colorful foliage">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+
+  <div class="bee bee-1" aria-hidden="true">
+    <svg viewBox="0 0 64 44">
+      <ellipse class="wing" cx="25" cy="13" rx="13" ry="8" fill="rgba(255,255,255,.72)" stroke="rgba(0,0,0,.2)"/>
+      <ellipse class="wing" cx="42" cy="13" rx="13" ry="8" fill="rgba(255,255,255,.72)" stroke="rgba(0,0,0,.2)"/>
+      <ellipse cx="34" cy="25" rx="17" ry="11" fill="#ffd21f"/>
+      <rect x="25" y="16" width="5" height="19" rx="2" fill="#111"/>
+      <rect x="36" y="15" width="5" height="20" rx="2" fill="#111"/>
+      <circle cx="49" cy="24" r="6" fill="#111"/>
+      <path d="M52 19 Q58 10 61 14 M51 20 Q54 10 50 8" fill="none" stroke="#111" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="bee bee-2" aria-hidden="true">
+    <svg viewBox="0 0 64 44">
+      <ellipse class="wing" cx="25" cy="13" rx="13" ry="8" fill="rgba(255,255,255,.66)"/>
+      <ellipse class="wing" cx="42" cy="13" rx="13" ry="8" fill="rgba(255,255,255,.66)"/>
+      <ellipse cx="34" cy="25" rx="17" ry="11" fill="#ffd21f"/>
+      <rect x="25" y="16" width="5" height="19" rx="2" fill="#111"/>
+      <rect x="36" y="15" width="5" height="20" rx="2" fill="#111"/>
+      <circle cx="49" cy="24" r="6" fill="#111"/>
+    </svg>
+  </div>
+  <div class="bee bee-3" aria-hidden="true">
+    <svg viewBox="0 0 64 44">
+      <ellipse class="wing" cx="25" cy="13" rx="13" ry="8" fill="rgba(255,255,255,.6)"/>
+      <ellipse class="wing" cx="42" cy="13" rx="13" ry="8" fill="rgba(255,255,255,.6)"/>
+      <ellipse cx="34" cy="25" rx="17" ry="11" fill="#ffd21f"/>
+      <rect x="25" y="16" width="5" height="19" rx="2" fill="#111"/>
+      <rect x="36" y="15" width="5" height="20" rx="2" fill="#111"/>
+      <circle cx="49" cy="24" r="6" fill="#111"/>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <div>
+      <div class="hero-kicker">Patriot-led. Michigan-focused.</div>
+      <h1>Michigan <span>First.</span></h1>
+    </div>
+    <div class="hero-side">
+      <p>Michigan First is a grassroots movement working to restore sovereignty, prosperity, safety, and American values across our state. We put Michigan families, American citizens, and constitutional principles first.</p>
+      <div class="hero-actions">
+        <a class="btn btn-yellow" href="#get-involved">Join the Movement <span>→</span></a>
+        <a class="btn btn-ghost" href="#priorities">Explore Priorities</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots" aria-label="Hero slideshow">
+    <button class="active" aria-label="Show Michigan image 1"></button>
+    <button aria-label="Show Michigan image 2"></button>
+    <button aria-label="Show Michigan image 3"></button>
+    <button aria-label="Show Michigan image 4"></button>
+    <button aria-label="Show Michigan image 5"></button>
+    <button aria-label="Show Michigan image 6"></button>
+  </div>
+  <div class="scroll-hint"><span>Discover Michigan First</span><span class="scroll-line"></span></div>
+</section>
+
+<div class="movement-bar" aria-hidden="true">
+  <div class="marquee">
+    <span>Faith First</span><span>Family First</span><span>Freedom First</span><span>Michigan First</span><span>Patriots First</span>
+    <span>Faith First</span><span>Family First</span><span>Freedom First</span><span>Michigan First</span><span>Patriots First</span>
+  </div>
+</div>
+
+<section class="section section-dark" id="mission">
+  <div class="container mission-layout">
+    <div class="mission-sticky reveal">
+      <div class="eyebrow">Our Mission</div>
+      <h2 class="display">Take back our <span class="yellow">great state.</span></h2>
+      <p class="lead">The Michigan First Movement is a grassroots patriot organization built on the unshakeable conviction that strong, high-functioning local communities form the foundation of a strong state and nation.</p>
+      <div class="quote-panel">
+        <p>Because the power belongs to We the People.</p>
+      </div>
+    </div>
+
+    <div class="mission-stack reveal">
+      <article class="mission-row">
+        <div class="mission-number">01</div>
+        <div><h3>Decentralize Power</h3><p>We reject the growing expansion of federal tyranny that threatens state sovereignty and burdens Michigan families with an out-of-touch, unaccountable central government.</p></div>
+      </article>
+      <article class="mission-row">
+        <div class="mission-number">02</div>
+        <div><h3>Uproot Corruption</h3><p>Transform government into a lean, highly effective agency that puts the people of Michigan first before special interests, foreign powers, and unelected bureaucracy.</p></div>
+      </article>
+      <article class="mission-row">
+        <div class="mission-number">03</div>
+        <div><h3>Protect Faith and Freedom</h3><p>Protect founding principles and traditional values while freeing local communities to make their own decisions.</p></div>
+      </article>
+      <article class="mission-row">
+        <div class="mission-number">04</div>
+        <div><h3>Empower Citizens</h3><p>From taxes and debt to energy, infrastructure, election security, ballot access, and government waste, every cause advances citizen empowerment.</p></div>
+      </article>
+      <article class="mission-row">
+        <div class="mission-number">05</div>
+        <div><h3>Mobilize Patriots</h3><p>Through grassroots activism, education, community organizing, town halls, citizen initiatives, ballot referendums, and local solutions, we unite Michigan patriots.</p></div>
+      </article>
+      <article class="mission-row">
+        <div class="mission-number">06</div>
+        <div><h3>Reclaim Michigan</h3><p>Farmers, factory workers, small business owners, parents, veterans, and believers share a sacred duty to reclaim our state for We the People.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="michigan-showcase" id="media">
+  <div class="showcase-grid">
+    <div class="showcase-photo reveal">
+      <img src="https://images.unsplash.com/photo-1577115074843-4d8c4b43e90a?auto=format&fit=crop&w=1800&q=88" alt="Michigan shoreline and natural landscape">
+    </div>
+    <div class="showcase-copy reveal">
+      <div class="eyebrow">This is Michigan</div>
+      <h2 class="display">Worth <span class="yellow">fighting for.</span></h2>
+      <p>From the Great Lakes to family farms, factory floors, small towns, cities, and the Upper Peninsula, the movement begins with the people who call Michigan home.</p>
+      <div class="hero-actions" style="margin-top:26px">
+        <a href="#media" class="btn btn-yellow">Explore Media</a>
+        <a href="#values" class="btn btn-ghost">Our Values</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="priorities">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Policy Priorities</div>
+      <h2 class="display">A Michigan <span class="yellow">renaissance.</span></h2>
+      <p class="lead">A clear path through the movement's priorities, designed so visitors can understand the issue, explore the policy, and take action.</p>
+    </div>
+    <div class="policy-grid reveal">
+      <a class="policy-card" href="#"><span class="num">PRIORITY 01</span><div><h3>Law, Order & Security</h3><p>Public safety, secure communities, strong enforcement, and accountable government.</p></div><span class="arrow">↗</span></a>
+      <a class="policy-card" href="#"><span class="num">PRIORITY 02</span><div><h3>Energy & Tax Freedom</h3><p>Reliable energy, lower burdens, economic independence, and long-term prosperity.</p></div><span class="arrow">↗</span></a>
+      <a class="policy-card" href="#"><span class="num">PRIORITY 03</span><div><h3>Farm & Food Sovereignty</h3><p>Protect Michigan farms, producers, rural communities, and food security.</p></div><span class="arrow">↗</span></a>
+      <a class="policy-card" href="#"><span class="num">PRIORITY 04</span><div><h3>Manufacturing Leadership</h3><p>Rebuild Michigan industry and keep the state competitive in advanced manufacturing.</p></div><span class="arrow">↗</span></a>
+      <a class="policy-card" href="#"><span class="num">PRIORITY 05</span><div><h3>Education & Parental Rights</h3><p>Empower parents, strengthen civics, and expand educational opportunity.</p></div><span class="arrow">↗</span></a>
+      <a class="policy-card" href="#"><span class="num">PRIORITY 06</span><div><h3>Accountable Government</h3><p>Confront waste and corruption, demand transparency, and return power to the people.</p></div><span class="arrow">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner" id="legislation">
+  <div class="cta-inner reveal">
+    <h2>Ideas become change when citizens <strong>act.</strong></h2>
+    <a class="btn btn-dark" href="#">Explore Legislation →</a>
+  </div>
+</section>
+
+<section class="section section-off" id="programs">
+  <div class="container involvement-grid">
+    <div class="reveal">
+      <div class="eyebrow">Programs</div>
+      <h2 class="display">Built for <span class="yellow">action.</span></h2>
+      <p class="lead">Organize the movement's initiatives into clear, useful pathways that can grow as new programs launch across Michigan.</p>
+    </div>
+    <div class="action-list reveal">
+      <a class="action-card" href="#"><span class="action-icon">01</span><span><h3>Community Organizing</h3><p>Tools and resources for local chapters, volunteers, and county-level action.</p></span><span>→</span></a>
+      <a class="action-card" href="#"><span class="action-icon">02</span><span><h3>Citizen Education</h3><p>Policy explainers, constitutional education, training, and public resources.</p></span><span>→</span></a>
+      <a class="action-card" href="#"><span class="action-icon">03</span><span><h3>Events & Town Halls</h3><p>Bring Michigan citizens together in person to organize, learn, and lead.</p></span><span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="leadership">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Leadership</div>
+      <h2 class="display">Leadership rooted in <span class="yellow">service.</span></h2>
+      <p class="lead">A dedicated leadership experience can introduce founder Gregor Butzow, the team, their biographies, and their message to Michigan citizens.</p>
+      <div class="hero-actions" style="margin-top:28px">
+        <a class="btn btn-yellow" href="#">Meet the Leadership</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="values">
+  <div class="container involvement-grid">
+    <div class="reveal">
+      <div class="eyebrow">Values</div>
+      <h2 class="display">Faith. Family. <span class="yellow">Freedom.</span></h2>
+    </div>
+    <div class="reveal">
+      <p class="lead">We believe self-sufficient communities governed by constitutional principles, traditional American Christian values, faith, family, integrity, and hard work are essential to securing a prosperous future for Michigan and America.</p>
+      <p class="lead">The design intentionally gives these values room to breathe instead of burying them in a wall of copy.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section join-section" id="get-involved">
+  <div class="container join-grid">
+    <div class="reveal">
+      <div class="eyebrow">Get Involved</div>
+      <h2 class="display">Your state. <span class="yellow">Your move.</span></h2>
+      <p class="lead">Become a member, volunteer locally, attend events, help build a chapter, request a yard sign, or prepare to serve your community.</p>
+    </div>
+    <form class="join-form reveal" id="patriotForm">
+      <div class="form-grid">
+        <div class="form-field"><label for="firstName">First name</label><input id="firstName" name="firstName" autocomplete="given-name" required></div>
+        <div class="form-field"><label for="lastName">Last name</label><input id="lastName" name="lastName" autocomplete="family-name" required></div>
+        <div class="form-field full"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        <div class="form-field"><label for="zip">Michigan ZIP code</label><input id="zip" name="zip" inputmode="numeric" autocomplete="postal-code"></div>
+        <div class="form-field"><label for="interest">I want to</label>
+          <select id="interest" name="interest">
+            <option>Join the movement</option>
+            <option>Volunteer</option>
+            <option>Attend events</option>
+            <option>Start a chapter</option>
+            <option>Request a yard sign</option>
+          </select>
+        </div>
+        <button class="form-submit" type="submit">Become a Michigan First Patriot</button>
+        <p class="form-note" id="formNote">Demo form for this concept. Connect this to the client's email/CRM before launch.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="cta-banner" id="shop">
+  <div class="cta-inner reveal">
+    <h2>Show your Michigan First <strong>pride.</strong></h2>
+    <a class="btn btn-dark" href="#">Shop Apparel & Yard Signs →</a>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h2>Michigan First Movement</h2>
+      <p>Patriot-led grassroots action for sovereignty, prosperity, safety, and American values in Michigan.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Home</a><a href="#mission">Mission</a><a href="#media">Media</a>
+      <a href="#priorities">Policy Priorities</a><a href="#legislation">Legislation</a><a href="#programs">Programs</a>
+      <a href="#leadership">Leadership</a><a href="#values">Values</a><a href="#get-involved">Get Involved</a>
+      <a href="#shop">Shop</a><a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>
+      <p>© <span id="year"></span> Michigan First Movement | All Rights Reserved</p>
+      <p style="margin-top:7px">Mockup Site by Phoenix Securitas Tech</p>
+    </div>
+    <p class="people-line">Because the <span>POWER BELONGS</span><br>to WE THE PEOPLE.</p>
+  </div>
+</footer>
+
+<script>
+const header = document.getElementById('header');
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function setMenu(open){
+  mobileMenu.classList.toggle('open', open);
+  mobileMenu.setAttribute('aria-hidden', String(!open));
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  menuToggle.textContent = open ? '×' : '☰';
+  document.body.classList.toggle('menu-open', open);
+}
+menuToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', e => { if(e.key === 'Escape') setMenu(false); });
+
+function onScroll(){
+  header.classList.toggle('scrolled', window.scrollY > 24);
+}
+onScroll();
+window.addEventListener('scroll', onScroll, {passive:true});
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+const heroSlides = [...document.querySelectorAll('.hero-slide')];
+const heroDots = [...document.querySelectorAll('#heroDots button')];
+let heroIndex = 0;
+let heroTimer;
+
+function showHeroSlide(index){
+  heroIndex = (index + heroSlides.length) % heroSlides.length;
+  heroSlides.forEach((slide, i) => slide.classList.toggle('active', i === heroIndex));
+  heroDots.forEach((dot, i) => dot.classList.toggle('active', i === heroIndex));
+}
+function startHeroTimer(){
+  clearInterval(heroTimer);
+  heroTimer = setInterval(() => showHeroSlide(heroIndex + 1), 10000);
+}
+heroDots.forEach((dot, i) => dot.addEventListener('click', () => {
+  showHeroSlide(i);
+  startHeroTimer();
+}));
+startHeroTimer();
+
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+document.getElementById('patriotForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const note = document.getElementById('formNote');
+  note.textContent = 'Demo captured. Production version will send this to the Michigan First supporter system.';
+  note.style.fontWeight = '700';
+});
+</script>
+</body>
+</html>
